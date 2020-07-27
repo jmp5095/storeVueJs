@@ -1,0 +1,30 @@
+a:hover {
+  opacity: 0.5;
+}
+
+body::after {
+  content: "";
+  background: url('resources/fondo2.jpg');
+  opacity: 0.15;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+#overlay{
+  position: fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(0, 0, 0, 0.6);
+}
+
+.mytitles{
+  width: 40em;
+  height:2.5em;
+
+}
