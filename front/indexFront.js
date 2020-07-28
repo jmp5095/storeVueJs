@@ -11,7 +11,7 @@ const app=new Vue({
     currentProduct:{},
     key:{value:''},
     venta:{totalPrice:'',seller_id:1},
-    sale_id_numeric:0,
+    sale_id:0,
     totalCar:0
   },
   mounted: function(){
@@ -48,7 +48,6 @@ const app=new Vue({
                }else{
                  app.total();
                  app.products=lsp;
-                 console.log(app.products)
                  console.log("no bd");
 
                }
@@ -62,65 +61,56 @@ const app=new Vue({
               let tp=0;
               if (lsc) {
 
-              for (let i=0;i<lsc.length;i++) {
-                tp+=lsc[i].totalPrice;
-              }
+                  let formData=app.toFormData(app.venta);
 
-              app.venta.totalPrice=tp;
+                   axios.post('http://localhost/store2/back/saleBackend.php?action=create',formData).then(function(response){
 
-              let formData=app.toFormData(app.venta);
+                      if (response.data.error) {
+                          // app.errorMsg="Error de registro";
+                      }else{
+                          // app.successMsg="registro exitoso!!";
+                           app.sale_id= response.data.sale_id;
 
-              axios.post('http://localhost/store2/back/saleBackend.php?action=create',formData).then(function(response){
-
-                  if (response.data.error) {
-                      app.errorMsg="Error de registro";
-                  }else{
-                      app.successMsg="registro exitoso!!";
-                      let sd=response.data.sale_id
-
-                      localStorage.setItem('sale_id',JSON.stringify(sd));
-                  }
-
-              });
+                           console.log(app.sale_id)
 
 
-              //id of the facture
-              let saleid=JSON.parse(localStorage.getItem('sale_id'));
-              app.sale_id_numeric=saleid;
+                           app.createFill(app.sale_id);
+                      }
 
-              if (app.sale_id_numeric==null) {
-                app.sale_id_numeric=1
-              }else{
-                app.sale_id_numeric++;
-              }
+                  });
 
-
-
-
-              //register of products saled
-              for (var c of lsc) {
-
-                app.currentProduct={
-                  stock:c.stock,
-                  quantity:c.quantity,
-                  sale_id:app.sale_id_numeric,
-                  product_id:c.id,
-                }
-
-                app.createProductSale();
-                app.updateProduct();
-              }
-              //clean the local storage
-              localStorage.removeItem('LSProducts');
-              localStorage.removeItem('LSCar');
-              localStorage.removeItem('total');
-              this.getAllProducts();
-              app.car=[];
-              app.totalCar=0;
 
             }else{
               app.errorMsg="La canasta esta vacia!"
             }
+         },
+         createFill:function(sale_id){
+           //my car of shopping
+           let lsc=JSON.parse(localStorage.getItem('LSCar'));
+           //id of the facture
+           app.sale_id=sale_id;
+           console.log(app.sale_id)
+
+           //register of products saled
+           for (var c of lsc) {
+
+             app.currentProduct={
+               stock:c.stock,
+               quantity:c.quantity,
+               sale_id:app.sale_id,
+               product_id:c.id,
+             }
+
+             app.createProductSale();
+             app.updateProduct();
+           }
+           //clean the local storage
+           localStorage.removeItem('LSProducts');
+           localStorage.removeItem('LSCar');
+           localStorage.removeItem('total');
+           this.getAllProducts();
+           app.car=[];
+           app.totalCar=0;
          },
 
          createProductSale:function(){
@@ -130,9 +120,11 @@ const app=new Vue({
               if (response.data.error) {
                 app.errorMsg=response.data.message;
 
+                console.log(response.data.sql);
               }else{
 
                 app.successMsg=response.data.message;
+                console.log(response.data.sql);
               }
             });
 
@@ -228,9 +220,11 @@ const app=new Vue({
           localStorage.removeItem('LSProducts');
           localStorage.removeItem('LSCar');
           localStorage.removeItem('total');
+
           this.getAllProducts();
           app.car=[];
           app.totalCar=0;
+          app.sale_id_numeric=0;
         }
 
   },
@@ -242,5 +236,6 @@ const app=new Vue({
     }else{
       this.car=datosLS;
     }
+
   }
 });

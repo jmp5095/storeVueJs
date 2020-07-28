@@ -15,6 +15,7 @@ if (isset($_GET['action'])) {
 }
 
 if ($action=='create') {
+
   $seller_id=$_POST['seller_id'];
   $sql=$conn->query("INSERT INTO sales (seller_id,created_up)
   VALUES($seller_id,NOW())");
@@ -22,6 +23,8 @@ if ($action=='create') {
   $rs = $conn->query("SELECT MAX(id) AS id FROM sales");
     if ($row =$rs->fetch_assoc()) {
       $id = $row;
+    }else{
+      $result['error']=true;
     }
     $result['sale_id']= $id['id'];
 
