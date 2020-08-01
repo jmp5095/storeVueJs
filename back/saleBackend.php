@@ -13,7 +13,33 @@ if (isset($_GET['action'])) {
   $action=$_GET['action'];
 
 }
+//read sales
+if ($action=='read') {
+  $sql=$conn->query("SELECT s.id,u.name,s.created_up FROM sales s, users u WHERE s.seller_id=u.id");
+  $sales=Array();
+  while($row=$sql->fetch_assoc()){
+    array_push($sales,$row);
+  }
+  $result['sales']=$sales;
+}
 
+//read bill
+if ($action=='readBill') {
+  $sale_id=$_POST['id'];
+
+  $sql=$conn->query("SELECT p.name,ps.quantity, p.price
+    FROM products_sales ps, products p
+    WHERE ps.sale_id=$sale_id
+    AND ps.product_id=p.id ");
+
+  $bill=Array();
+  while ($row=$sql->fetch_assoc()) {
+    array_push($bill,$row);
+  }
+
+  $result['bill']=$bill;
+}
+//register or create sale
 if ($action=='create') {
 
   $seller_id=$_POST['seller_id'];

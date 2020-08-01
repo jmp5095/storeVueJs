@@ -15,34 +15,13 @@
     <link rel="stylesheet" href="../styles.css">
 
   </head>
+  <header>
+    <?php include_once 'navbar.php';?>
+  </header>
   <body>
 
         <div id="app">
-          <nav class="navbar navbar-expand-lg   bg-dark">
-                  <a class="navbar-brand text-primary mr-5" href="http://localhost/store2"><img src="../resources/titulo.png" alt=""></a>
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
 
-                  <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                      <a class="nav-link text-light " href="http://localhost/store2">Vender <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-light" href="http://localhost/store2/views/users.html">Usuarios</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-light" href="http://localhost/store2/views/productsView.html">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-light" href="http://localhost/store2/views/categoriesView.html">Categorías</a>
-                    </li>
-                  </ul>
-
-                  <div>
-                      <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" v-model="key.value" v-on:keyup="filterProduct">
-                  </div>
-          </nav>
 <!-- //////////////////////////////////////////////////////////////////////////////////////////// -->
 
           <div class="container my-5">
@@ -58,6 +37,11 @@
                     <span class="material-icons align-middle ">add_circle</span>&nbsp;&nbsp;Añadir Nuevo Producto
                 </button>
               </div>
+              <div class="col-lg-3 mt-3">
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" v-model="key.value" v-on:keyup="filterProduct">
+
+              </div>
+
             </div>
             <hr class="bg-info">
             <div class="alert alert-danger" v-if="errorMsg">

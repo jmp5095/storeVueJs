@@ -5,7 +5,7 @@ a:hover {
 body::after {
   content: "";
   background: url('resources/fondo2.jpg');
-  opacity: 0.15;
+  opacity: 0.35;
   top: 0;
   left: 0;
   bottom: 0;
