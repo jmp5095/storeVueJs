@@ -14,7 +14,7 @@
 
   //my users
   if ($action=='read') {
-    $sql=$conn->query("SELECT * FROM users");
+    $sql=$conn->query("SELECT identification,name,email,phone FROM users");
     $users=array();
     while($row=$sql->fetch_assoc()){
       array_push($users,$row);

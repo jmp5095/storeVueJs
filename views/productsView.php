@@ -1,3 +1,14 @@
+<?php
+  session_start();
+  if (!isset($_SESSION['user'])) {
+    ?><script type="text/javascript">
+      alert('Inicie sesión');
+      window.location.href='http://localhost/store2/views/loginView.php'
+    </script><?php
+  }
+
+ ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -13,7 +24,6 @@
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
     <!-- my styles -->
     <link rel="stylesheet" href="../styles.css">
-
   </head>
   <header>
     <?php include_once 'navbar.php';?>

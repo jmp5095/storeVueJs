@@ -34,3 +34,11 @@ CREATE TABLE products_sales(
   FOREIGN KEY (sale_id) references sales(id),
   FOREIGN KEY (product_id) references products(id)
 );
+
+CREATE TABLE permiso_rol(
+  per_rol_id int(11) primary key auto_increment,
+  per_id int(11) not null,
+  rol_id int(11) not null,
+  FOREIGN KEY (per_id) references permiso(per_id),
+  FOREIGN KEY (rol_id) references rol(rol_id)
+);

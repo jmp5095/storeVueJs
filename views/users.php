@@ -1,3 +1,13 @@
+<?php
+  session_start();
+  if (!isset($_SESSION['user'])) {
+    ?><script type="text/javascript">
+      alert('Inicie sesión');
+      window.location.href='http://localhost/store2/views/loginView.php'
+    </script><?php
+  }
+
+ ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>

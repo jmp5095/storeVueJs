@@ -1,3 +1,13 @@
+<?php
+  session_start();
+  if (!isset($_SESSION['user'])) {
+    ?><script type="text/javascript">
+      alert('Inicie sesión');
+      window.location.href='http://localhost/store2/views/loginView.php'
+    </script><?php
+  }
+
+ ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -9,6 +19,7 @@
   <link rel="stylesheet" href="styles.css">
   <!-- icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <header>
   <?php

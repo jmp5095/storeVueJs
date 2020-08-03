@@ -41,8 +41,9 @@ if ($action=='readBill') {
 }
 //register or create sale
 if ($action=='create') {
+  session_start();
+  $seller_id=$_SESSION['user']['id'];
 
-  $seller_id=$_POST['seller_id'];
   $sql=$conn->query("INSERT INTO sales (seller_id,created_up)
   VALUES($seller_id,NOW())");
 
