@@ -57,7 +57,7 @@ if ($action=='create') {
 
 }
 
-//create
+//create bill
 if ($action=='productsSales') {
   $quantity=$_POST['quantity'];
   $sale_id=$_POST['sale_id'];
@@ -78,13 +78,51 @@ if ($action=='productsSales') {
 //update product
 if ($action=='update') {
   $id=$_POST['product_id'];
-  $stock=$_POST['stock'];
-  $sql=$conn->query("UPDATE products SET stock='$stock' WHERE id='$id'");
+  $quantity=$_POST['quantity'];
+  $prod=$conn->query("SELECT stock FROM products where id=$id");
+  $myProd=array();
+  if ($row=$prod->fetch_assoc()) {
+    array_push($myProd,$row);
+  }
+  $stock=$myProd[0]['stock'];
+  $newStock=$stock - $quantity;
+  $sql=$conn->query("UPDATE products SET stock='$newStock' WHERE id='$id'");
   $result['resp']="UPDATE products SET stock='$stock' WHERE id='$id'";
   if ($sql) {
   }else{
     $result['error']=true;
   }
+}
+
+// filter products
+
+if ($action=="filter") {
+  $keyup=$_POST['value'];
+  $sql=$conn->query("SELECT s.id,u.name,s.created_up
+    FROM sales s,users u
+    WHERE s.seller_id=u.id
+    and u.name like '%$keyup%'");
+
+  $sales=array();
+  while ($row=$sql->fetch_assoc()) {
+    array_push($sales,$row);
+  }
+  $result['sales']=$sales;
+
+}
+
+if ($action=="filterDate") {
+  $date=$_POST['value'];
+  $sql=$conn->query("SELECT s.id,u.name,s.created_up
+    FROM sales s, users u
+    WHERE s.seller_id=u.id
+    AND s.created_up LIKE'%$date%'");
+
+  $sales=array();
+  while($row=$sql->fetch_assoc()){
+    array_push($sales,$row);
+  }
+  $result['sales']=$sales;
 }
 
 $conn->close();

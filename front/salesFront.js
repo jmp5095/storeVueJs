@@ -6,18 +6,22 @@ const app=new Vue({
     successMsg:'',
     sales:[],
     bill:[],
-    currentSale:{}
-
+    currentSale:{},
+    search:'',
+    searchDate:{value:''},
+    picked:'date'
 
   },
   mounted:function(){
     this.getAllSales();
+
   },
   methods:{
     getAllSales:function(){
       axios.post('http://localhost/store2/back/saleBackend.php?action=read').then(function(response){
         if (!response.data.error) {
           app.sales=response.data.sales;
+          console.log(response.data.sales)
         }
       });
     },
@@ -30,6 +34,23 @@ const app=new Vue({
         }
       });
     },
+    // filter:function(){
+    //   let formData=app.toFormData(app.search);
+    //   axios.post('http://localhost/store2/back/saleBackend.php?action=filter',formData).then(function(response){
+    //     if (!response.data.error) {
+    //       app.sales=response.data.sales;
+    //     }else{
+    //
+    //     }
+    //   });
+    // },
+    filterClean:function(){
+      app.search.value=''
+      app.searchDate.value=''
+      app.getAllSales()
+    },
+
+    // ////////////////////
     selectSale:function(sale){
       app.currentSale=sale;
     },
@@ -69,5 +90,15 @@ const app=new Vue({
     }
 
 
+  },
+
+  computed:{
+    filterDate:function(){
+      return this.sales.filter((item)=> item.created_up.includes(this.searchDate.value))
+    },
+    filter:function(){
+      return this.sales.filter((item)=>
+      item.name.includes((this.search).charAt(0).toUpperCase()) || item.id.includes(this.search))
+    }
   }
 });

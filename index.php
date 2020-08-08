@@ -1,11 +1,10 @@
 <?php
-  session_start();
-  if (!isset($_SESSION['user'])) {
-    ?><script type="text/javascript">
-      alert('Inicie sesión');
-      window.location.href='http://localhost/store2/views/loginView.php'
-    </script><?php
-  }
+  // session_start();
+  // if (!isset($_SESSION['user'])) {
+  //   ?><script type="text/javascript">
+  //     window.location.href='http://localhost/store2/views/loginView.php'
+  //   </script><?php
+  // }
 
  ?>
 <!DOCTYPE html>
@@ -30,10 +29,10 @@
 
 <body>
 
-
   <div id="app">
 
     <div class="container my-5">
+      <hr>
       <div class="row mt-3">
         <div class="col-lg-6">
           <img class="mytitles" src="resources/registroDeVenta.png">
@@ -43,14 +42,35 @@
             <i class="fa fa-shopping-cart fa-2x mr-2"></i><span class="font-weight-bold text-center">Registrar Venta</span>
           </button>
         </div>
+        <div class="col-lg-3 mt-3">
+          <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" v-model="search">
+        </div>
       </div>
-      <hr class="bg-info">
+      <hr >
       <div class="alert alert-danger" v-if="errorMsg">
         {{errorMsg}}
       </div>
       <div class="alert alert-info" v-if="successMsg">
         {{successMsg}}
       </div>
+      <!-- paginator -->
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+
+          <li class="page-item" v-for="product in filter"><a class="page-link" href="#">1</a></li>
+
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
       <!-- Displaying Records -->
       <div class="row">
         <div class="col-lg-12">
@@ -66,7 +86,7 @@
             </thead>
             <tbody>
 
-              <tr class="text-center" v-for="product in products">
+              <tr class="text-center" v-for="product in filter" v-if="picked=='byName'">
                 <td>{{product.id}}</td>
                 <td>{{product.name}}</td>
                 <td>{{product.stock}}</td>
@@ -84,7 +104,7 @@
               </tr>
             </tbody>
           </table>
-          <hr class="bg-info">
+          <hr>
 
           <div >
 
@@ -104,16 +124,16 @@
           </div>
 
 
-          <hr class="bg-info">
+          <hr>
 
           <div class="">
-            <div class="alert alert-primary" role="alert" v-for="p in car">
-              <span class="text-warning"><img class="mr-3" src="resources/lemon-solid.svg" width="20" height="30"  alt=""></span>
+            <div class="alert alert-success" role="alert" v-for="p in car">
+              <span class="text-warning"><img class="mr-3 " src="resources/lemon-solid.svg" width="20" height="30"  alt=""></span>
               <tr>
-                <td style="width:15px;" ><b class="mr-2"> Nombre:</b>{{p.name}}</td>
-                <td style="width:15px;"><b class="ml-4 mr-2">Precio/u:</b>${{p.price}}</td>
-                <td style="width:15px;"><b class="ml-4 mr-2">Cantidad:</b>{{p.quantity}}</td>
-                <td style="width:15px;"><b class="ml-4 mr-2">Precio/t:</b>${{p.totalPrice}}</td>
+                <td style="width:15px;" ><b class="font-weight-bold text-primary mr-2"> Nombre:</b>{{p.name}}</td>
+                <td style="width:15px;"><b class="font-weight-bold text-primary ml-4 mr-2">Precio/u:</b>${{p.price}}</td>
+                <td style="width:15px;"><b class="font-weight-bold text-primary ml-4 mr-2">Cantidad:</b>{{p.quantity}}</td>
+                <td style="width:15px;"><b class="font-weight-bold text-primary ml-4 mr-2">Precio/t:</b>${{p.totalPrice}}</td>
 
               </tr>
             </div>
@@ -139,6 +159,8 @@
   <script src="resources/libs/vue.js"></script>
   <!-- my code front  -->
   <script src="front/indexFront.js"></script>
+
+
 
 </body>
 </html>

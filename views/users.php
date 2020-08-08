@@ -31,9 +31,9 @@
   <body>
 
         <div id="app">
-
 <!-- //////////////////////////////////////////////////////////////////////////////////////////// -->
           <div class="container my-5">
+            <hr>
             <div class="row mt-3">
               <div class="col-lg-6">
                 <img class="mytitles" src="../resources/gestionDeUsuarios.png">
@@ -44,7 +44,7 @@
                 </button>
               </div>
             </div>
-            <hr class="bg-info">
+            <hr>
             <div class="alert alert-danger" v-if="errorMsg">
               {{errorMsg}}
             </div>
@@ -78,10 +78,10 @@
                     </tr>
                   </tbody>
                 </table>
+                <hr>
               </div>
             </div>
           </div>
-
           <!-- add new user model -->
           <div id="overlay" v-if="showAddModal">
             <div class="modal-dialog">

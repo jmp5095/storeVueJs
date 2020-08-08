@@ -33,14 +33,8 @@ const app=new Vue({
          if (response.data.error) {
            app.errorMsg=response.data.message;
          }else{
-           let sc1=JSON.parse(localStorage.getItem('sCart1'))
-           if (sc1==null) {
-             console.log("esta nulo");
              app.products=response.data.products;
-           }else{
              console.log("no esta nulo");
-             app.products=src;
-           }
          }
        });
      },
