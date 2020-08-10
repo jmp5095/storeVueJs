@@ -1,10 +1,10 @@
 <?php
-  // session_start();
-  // if (!isset($_SESSION['user'])) {
-  //   ?><script type="text/javascript">
-  //     window.location.href='http://localhost/store2/views/loginView.php'
-  //   </script><?php
-  // }
+  session_start();
+  if (!isset($_SESSION['user'])) {
+    ?><script type="text/javascript">
+      window.location.href='http://localhost/store2/views/loginView.php'
+    </script><?php
+  }
 
  ?>
 <!DOCTYPE html>
@@ -53,24 +53,32 @@
       <div class="alert alert-info" v-if="successMsg">
         {{successMsg}}
       </div>
-      <!-- paginator -->
-      <nav aria-label="Page navigation">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
+      <!-- Controls of paginator -->
 
-          <li class="page-item" v-for="product in filter"><a class="page-link" href="#">1</a></li>
-
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
+      <nav aria-label="Page navigation" class="text-center">
+          <ul class="pagination text-center">
+              <li>
+                  <a href="#" v-show="pag!=1" @click.prevent="pag -= 1" >
+                      <span class="page-link" > << </span>
+                  </a>
+                  <a href="#" v-show="pag==1" @click.prevent="" >
+                      <span class="page-link text-secondary"  > << </span>
+                  </a>
+              </li>
+              <li>
+                <a href="#" v-on:click.prevent="">
+                   <span class="page-link">{{pag}}</span>
+                 </a>
+              </li>
+              <li>
+                  <a href="#" v-if="filter.length - (pag * NUM_RESULTS) >0" @click.prevent="pag += 1">
+                      <span class="page-link"> >> </span>
+                  </a>
+              </li>
+          </ul>
       </nav>
+
+
       <!-- Displaying Records -->
       <div class="row">
         <div class="col-lg-12">
@@ -86,7 +94,7 @@
             </thead>
             <tbody>
 
-              <tr class="text-center" v-for="product in filter" v-if="picked=='byName'">
+              <tr class="text-center" v-for="(product,index) in filter" v-show="(pag - 1) * NUM_RESULTS <= index  && pag * NUM_RESULTS > index">
                 <td>{{product.id}}</td>
                 <td>{{product.name}}</td>
                 <td>{{product.stock}}</td>

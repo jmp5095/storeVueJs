@@ -74,7 +74,7 @@
     $keyup=$_POST['value'];
     $sql=$conn->query("SELECT p.id, p.name,p.stock,p.price,c.id as c_id,c.name as c_name
       FROM products p,categories c
-      WHERE p.category_id=c.id and (p.name like '%$keyup%' or c.name like '%$keyup%') ");
+      WHERE p.category_id=c.id and (p.name like '%$keyup%' or c.name like '%$keyup%' or p.id like '%$keyup%') ");
 
     $products=array();
     while ($row=$sql->fetch_assoc()) {

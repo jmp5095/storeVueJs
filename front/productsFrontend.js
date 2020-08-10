@@ -12,6 +12,8 @@ const app=new Vue({
     newProduct:{name:'',stock:'',price:'',category_id:1},
     currentProduct:{},
     key:{value:''},
+    pag: 1,
+    NUM_RESULTS: 5,
   },
   mounted: function(){
 

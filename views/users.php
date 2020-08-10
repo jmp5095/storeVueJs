@@ -43,6 +43,9 @@
                   <i class="fa fa-user"></i>&nbsp;&nbsp;Añadir Nuevo Usuario
                 </button>
               </div>
+              <div class="col-lg-3 mt-3">
+                <input class="form-control" type="text" placeholder="Buscar" value="" v-model="search">
+              </div>
             </div>
             <hr>
             <div class="alert alert-danger" v-if="errorMsg">
@@ -51,6 +54,17 @@
             <div class="alert alert-info" v-if="successMsg">
               {{successMsg}}
             </div>
+
+            <!-- Controls pagination -->
+            <nav>
+              <ul class="pagination">
+                <li><a href="#" ><span class="page-link text-secondary" v-on:click.prevent="" v-show="pag==1" > << </span> </a></li>
+                <li><a href="#" ><span class="page-link" v-on:click.prevent="pag--" v-show="pag!=1"> << </span> </a></li>
+                <li> <a href="#"><span class="page-link" v-on:click.prevent="">{{pag}}</span> </a> </li>
+                <li><a href="#"><span class="page-link" v-on:click.prevent="pag++"  v-show="filter.length-(pag*NUM_RESULTS) > 0"> >> </span> </a></li>
+              </ul>
+            </nav>
+
             <!-- Displaying Records -->
             <div class="row">
               <div class="col-lg-12">
@@ -64,7 +78,7 @@
                     <th>Eliminar</th>
                   </thead>
                   <tbody>
-                    <tr class="text-center" v-for="user of users">
+                    <tr class="text-center" v-for="(user,index) of filter" v-show="(pag-1)*NUM_RESULTS <= index && pag*NUM_RESULTS > index">
                       <td>{{user.identification}}</td>
                       <td>{{user.name}}</td>
                       <td>{{user.email}}</td>

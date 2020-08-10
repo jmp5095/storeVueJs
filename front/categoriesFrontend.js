@@ -9,7 +9,10 @@ const app2=new Vue({
     showDeleteModal:false,
     categories:[],
     newCategory:{name:""},
-    currentCategory:{}
+    currentCategory:{},
+    search:'',
+    pag:1,
+    NUM_RESULTS: 5
   },
   mounted: function(){
     this.getAllCategories();
@@ -80,5 +83,11 @@ const app2=new Vue({
       app2.successMsg='';
     }
 
+  },
+  computed:{
+    filter:function(){
+      return this.categories.filter((item)=> item.name.toLowerCase().includes(this.search.toLowerCase())
+                                          || item.id.includes(this.search))
+    }
   }
 });

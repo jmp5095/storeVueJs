@@ -60,8 +60,19 @@
             <div class="alert alert-info" v-if="successMsg">
               {{successMsg}}
             </div>
-
-
+            <!-- pagination -->
+            <nav class="">
+              <ul class="pagination">
+                <li>
+                  <a href="#"> <span class="page-link" v-on:click="pag--" v-show="pag!=1" > << </span> </a>
+                  <a href="#" > <span class="page-link text-secondary"  v-show="pag==1" > << </span> </a>
+                </li>
+                <li><a href="#"><span class="page-link" >{{pag}}</span></a></li>
+                <li>
+                  <a href="#"> <span class="page-link" v-on:click="pag++" v-show="products.length - (pag*NUM_RESULTS) > 0">  >> </span> </a>
+                </li>
+              </ul>
+            </nav>
 
             <!-- Displaying Records -->
             <div class="row">
@@ -77,7 +88,7 @@
                     <th>Eliminar</th>
                   </thead>
                   <tbody>
-                    <tr class="text-center" v-for="product in products">
+                    <tr class="text-center" v-for="(product,index) in products" v-show="(pag-1)*NUM_RESULTS <= index && pag * NUM_RESULTS > index">
                       <td>{{product.id}}</td>
                       <td>{{product.name}}</td>
                       <td>{{product.stock}}</td>

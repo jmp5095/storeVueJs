@@ -9,7 +9,10 @@ const app=new Vue({
     showDeleteModal:false,
     users:[],
     newUser:{identification:"",name:"",email:"",phone:""},
-    currentUser:{}
+    currentUser:{},
+    search:'',
+    pag:1,
+    NUM_RESULTS:5
   },
   mounted: function(){
     this.getAllUsers();
@@ -77,5 +80,12 @@ const app=new Vue({
       app.successMsg='';
     }
 
+  },
+  computed:{
+    filter:function(){
+      return this.users.filter((item)=> item.name.toLowerCase().includes(this.search.toLowerCase())
+                            || item.identification.toLowerCase().includes(this.search.toLowerCase())
+                              )
+    }
   }
 });

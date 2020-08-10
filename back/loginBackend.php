@@ -28,11 +28,11 @@ if ($action=="login") {
     session_start();
     $_SESSION['user']=$user[0];
     $resp['user']=$user;
-    $resp['lasesion']=$_SESSION['user'];
+
 
   }else{
     // echo "No existe";
-
+    $resp['user']=false;
   }
 
 }

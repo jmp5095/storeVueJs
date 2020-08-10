@@ -42,6 +42,9 @@
                   <span class="material-icons align-middle  ">add_circle</span>&nbsp;&nbsp;Añadir Nueva Categoría
                 </button>
               </div>
+              <div class="col-lg-3 mt-3">
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" v-model="search">
+              </div>
             </div>
             <hr>
             <div class="alert alert-danger" v-if="errorMsg">
@@ -51,7 +54,19 @@
               {{successMsg}}
             </div>
 
-
+            <!-- pagination -->
+            <nav class="">
+              <ul class="pagination">
+                <li>
+                  <a href="#"> <span class="page-link" v-on:click.prevent="pag--" v-show="pag!=1" > << </span> </a>
+                  <a href="#" > <span class="page-link text-secondary" v-on:click.prevent=""  v-show="pag==1" > << </span> </a>
+                </li>
+                <li><a href="#"><span class="page-link" v-on:click.prevent="">{{pag}}</span></a></li>
+                <li>
+                  <a href="#"> <span class="page-link" v-on:click.prevent="pag++" v-show="categories.length - (pag*NUM_RESULTS) > 0">  >> </span> </a>
+                </li>
+              </ul>
+            </nav>
 
             <!-- Displaying Records -->
             <div class="row">
@@ -64,7 +79,7 @@
                     <th>Eliminar</th>
                   </thead>
                   <tbody>
-                    <tr class="text-center" v-for="category of categories">
+                    <tr class="text-center" v-for="(category,index) of filter" v-show="(pag-1)*NUM_RESULTS <= index && pag * NUM_RESULTS > index">
                       <td>{{category.id}}</td>
                       <td>{{category.name}}</td>
                       <td><a href="#" class="text-success"

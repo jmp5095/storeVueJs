@@ -1,4 +1,3 @@
-
 const app=new Vue({
   el:'#app',
   data:{
@@ -14,7 +13,9 @@ const app=new Vue({
     sale_id:0,
     totalCar:0,
     search:'',
-    picked:'byName'
+    NUM_RESULTS: 5, // Numero de resultados por página
+    pag: 1, // Página inicial
+
   },
   mounted: function(){
     this.getAllProducts();

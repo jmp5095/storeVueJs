@@ -9,7 +9,9 @@ const app=new Vue({
     currentSale:{},
     search:'',
     searchDate:{value:''},
-    picked:'date'
+    picked:'date',
+    pag:1,
+    NUM_RESULTS: 5
 
   },
   mounted:function(){

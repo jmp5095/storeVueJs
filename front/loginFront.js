@@ -46,7 +46,7 @@ let verifyUserAxios=(e,p)=>{
   let prom= axios.post('http://localhost/store2/back/loginBackend.php?action=login',formData).then(function(response){
 
     if (! response.data.error) {
-        if (response.data.user[0]) {
+        if (response.data.user) {
 
           window.location.href='http://localhost/store2/'
 
